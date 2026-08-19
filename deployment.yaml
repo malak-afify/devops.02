@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atm-app-deployment
+  labels:
+    app: atm-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: atm-app
+  template:
+    metadata:
+      labels:
+        app: atm-app
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "5000"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: atm-app
+        image: malakafify/atm-app:latest  
+        ports:
+        - containerPort: 5000
